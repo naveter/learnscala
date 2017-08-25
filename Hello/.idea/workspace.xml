@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="278908c7-900a-45b1-af1f-e3bd85306073" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/example/ControlStructures.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -760,12 +759,20 @@
       <workItem from="1503218920207" duration="2884000" />
       <workItem from="1503568544457" duration="4214000" />
       <workItem from="1503657683212" duration="2509000" />
-      <workItem from="1503666697285" duration="2692000" />
+      <workItem from="1503666697285" duration="2746000" />
     </task>
+    <task id="LOCAL-00001" summary="control structures">
+      <created>1503677441324</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1503677441324</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14194000" />
+    <option name="totallyTimeSpent" value="14248000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="57" y="52" width="1810" height="1028" extended-state="4" />
@@ -812,7 +819,8 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="control structures" />
+    <option name="LAST_COMMIT_MESSAGE" value="control structures" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
