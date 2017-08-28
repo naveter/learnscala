@@ -1,0 +1,38 @@
+There are two main ways people prefer to work in Scala.
+Using an IDE.
+Using the command line.
+The following tutorials will walk you through the set up process for either way you prefer.
+
+However, if you just want to jump directly into Scala without installing anything, skip the guides on this page and check out:
+
+our interactive introduction to Scala on scala-exercises.com, or
+Scastie, Scala in the browser, with access to all Scala compilers and all published libraries!
+Setting up and getting started with Scala
+
+If prefer working in an IDE…
+
+IntelliJ is the most commonly-used IDE by Scala developers. In this tutorial, we’ll walk you through downloading and setting up IntelliJ with the Scala plugin, and we’ll get you started with your first Scala project, complete with unit tests!
+
+Getting Started with Scala in IntelliJ
+Building a Scala Project with IntelliJ and sbt
+Testing Scala in IntelliJ with ScalaTest
+If you prefer working on the command line…
+
+If you prefer using a text editor like emacs, Vim, Atom, or Sublime Text, then the best way to compile, test, and run Scala code is using sbt, Scala’s build tool.
+
+Getting Started with Scala and sbt on the Command Line
+Testing Scala with sbt and ScalaTest on the Command Line
+Next Steps
+
+Once you’ve finished these tutorials, check out
+
+The Tour of Scala for bite-sized introductions to Scala’s features.
+Learning Resources, which includes online interactive tutorials and courses.
+Our list of some popular Scala books.
+Getting Help
+
+There are a multitude of mailing lists and real-time chat channels in case you want to quickly connect with other Scala users. Check out our community page a list of these resources and where to reach out for help.
+
+Contents
+
+Setting up and getting started with
