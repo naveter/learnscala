@@ -14,7 +14,7 @@ object Classes extends  App{
         value += 1
       }
     }
-    def current = value
+    def current = this.value
   }
 
   // ex2

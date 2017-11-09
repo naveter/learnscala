@@ -1,6 +1,7 @@
 package example
 
 import java.awt.datatransfer.{DataFlavor, SystemFlavorMap}
+import java.util.TimeZone
 
 import scala.collection.{JavaConverters, mutable}
 import scala.collection.mutable.ArrayBuffer
@@ -12,10 +13,10 @@ import scala.util.Random
 object WorkingWithArrays extends App {
 
   // ex1
-  def rand(n: Int) = new Array[Int](n).map(_ => Random.nextInt())
+  def rand(n: Int) = new Array[Int](n).map(_ => (math.random * n).toInt)
   val randArr = rand(10)
-  randArr.foreach( print )
-  println()
+  randArr.foreach( i => print(i + ",") )
+  println("")
 
   // ex2
   def swapAdjacent(a: Array[Int]):Array[Int] = {
@@ -67,7 +68,12 @@ object WorkingWithArrays extends App {
 
   //One line solution with an Array
   val a3 = Array(51,-42,30,-4,25,-51,8,42)
-  val res = for (i <- 0 until a3.length if (i<=a3.indexWhere(_<0)||a3(i)>0)) yield a3(i)
+  val res = for (i <- 0 until a3.length if (i<=a3.indexWhere(_<0) || a3(i)>0)) yield a3(i)
+
+  // ex9
+  val id = "America/"
+  val a4 = TimeZone.getAvailableIDs.filter(_.startsWith(id)).map(_.stripPrefix(id)).sorted
+  a4.take(3).foreach(println)
 
   // Ex10
   val flavors = SystemFlavorMap.getDefaultFlavorMap.asInstanceOf[SystemFlavorMap]

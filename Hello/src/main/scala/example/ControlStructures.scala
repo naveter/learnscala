@@ -1,5 +1,7 @@
 package example
 
+import scala.math.pow
+
 /**
   * Created by bass on 25.08.17.
   */
@@ -30,11 +32,17 @@ object ControlStructures extends  App{
   println("");
 
   // ex5
-  def countdown(n: Int): Unit = {
-    (0 to 10).reverse.foreach(print)
+  def countdown(n: Int) {
+    for(i <- n.to(0, -1)) print(i + " ")
+    println("")
   }
   countdown(10)
   println("")
+
+  // ex6
+  var result: Long = 1
+  for (c <- "Hello") result *= c.toLong
+  println(result)
 
   // Ex7
   println(s"Hello in Unicode is: ${ "Hello".map(_.toLong).product }")
@@ -42,7 +50,20 @@ object ControlStructures extends  App{
   // Ex8
   def product(s: String): Long = s.map(_.toLong).product
 
+  // ex9
+  def product2(s: String): Long = {
+    if (s.tail != "") s.head.toLong * product2(s.tail) else s.head.toLong
+  }
+  println( product2("Hello") )
 
+  // ex10
+  def compute(x: Double, n: Int): Double = {
+    if (n > 0 && n % 2 == 0) pow( pow( x, n / 2 ), 2 )
+    else if (n > 0 && n % 2 != 0) x * pow( x, n - 1 )
+    else if (n < 0) 1 / pow( x, -n )
+    else 1
+  }
+  println( compute(5, 3) )
 
 
 }

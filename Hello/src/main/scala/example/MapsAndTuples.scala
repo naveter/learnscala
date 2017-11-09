@@ -2,6 +2,9 @@ package example
 
 import scala.collection.immutable.SortedMap
 import scala.collection.JavaConversions.propertiesAsScalaMap
+import scala.collection.JavaConversions.mapAsScalaMap
+import java.util.{Scanner, TreeMap}
+import scala.collection.mutable.Map
 
 /**
   * Created by bass on 27.08.17.
@@ -14,7 +17,7 @@ object MapsAndTuples extends App{
   println( discount.mkString(", ") )
 
   // ex2
-  val lines = scala.io.Source.fromFile("./resourse/ch04_ex02.txt").mkString
+  val lines = scala.io.Source.fromFile("./Hello/resourse/ch04_ex02.txt").mkString
   val uw = new scala.collection.mutable.HashMap[String, Int]
   for(w <- lines.split("\\W+")) uw(w) = uw.getOrElse(w, 0) + 1
   println(uw.filter((t) => t._2 > 5).mkString(", "))
@@ -28,10 +31,33 @@ object MapsAndTuples extends App{
   val wordCounts2 = SortedMap[String, Int]() ++ ( for( w <- words.distinct ) yield (w, words.count( _==w )) )
   println( wordCounts2.filter((t) => t._2 > 5).mkString(", ") )
 
+  // ex5
+  val url = getClass.getResource("/ch04_ex02.txt")
+  val words2 = new Scanner(url.openStream()).useDelimiter("\\W+")
+  val tree = new TreeMap[String, Int]()
+  while (words2.hasNext()) {
+    val word = words2.next()
+    if (tree.contains(word)) tree(word)+=1 else tree(word)=1
+  }
+  val map: Map[String, Int] = tree.filter(t => t._2 > 5)
+  println( map.mkString(", ") )
+
+  // ex6
+  val days = scala.collection.mutable.LinkedHashMap(
+    "MONDAY" -> java.util.Calendar.MONDAY,
+    "TUESDAY" -> java.util.Calendar.TUESDAY,
+    "WEDNESDAY" -> java.util.Calendar.WEDNESDAY,
+    "THURSDAY" -> java.util.Calendar.THURSDAY,
+    "FRIDAY" -> java.util.Calendar.FRIDAY,
+    "SATURDAY" -> java.util.Calendar.SATURDAY,
+    "SUNDAY" -> java.util.Calendar.SUNDAY
+  )
+  println(days.mkString(", "))
+
   // ex7
   val props: scala.collection.Map[String, String] = System.getProperties
   val maxLength = props.keys.maxBy(_.length).length
-  for((k,v) <- props) println(k + " " * (maxLength - k.length) + "|" + v)
+  for((k,v) <- props.filter((t) => t._1.length < 10)) println(k + " " * (maxLength - k.length) + "|" + v)
 
   // ex8
   def minmax(a: Array[Int]) = (a.min, a.max)
@@ -42,7 +68,7 @@ object MapsAndTuples extends App{
   println( lteqgt(Array(1,2,3,4,5,6), 3).toString() )
 
   // ex10
-  val diff = "Hello world ! pu".zip("hello world!").filter(t => t._1!=t._2)
+  val diff = "Hello world! pu".zip("hello world!").filter(t => t._1!=t._2)
   println( diff.mkString(", ") )
 
 
