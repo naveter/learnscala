@@ -12,7 +12,7 @@ import scala.util.Random
 object WorkingWithArrays extends App {
 
   // ex1
-  def rand(n: Int) = new Array[Int](n).map(_ => Random.nextInt(n))
+  def rand(n: Int) = new Array[Int](n).map(_ => Random.nextInt())
   val randArr = rand(10)
   randArr.foreach( print )
   println()
