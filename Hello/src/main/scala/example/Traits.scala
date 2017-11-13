@@ -28,18 +28,18 @@ object Traits extends App {
   val r = new Roscoe("mapple").plug
 
   // ex8
-  val b = new FileInputStream("resourse/tinyFile.txt") with Buffering
+  val b = new FileInputStream("Hello/resourse/tinyFile.txt") with Buffering
   val ab = new Array[Byte](100)
   b.read(ab)
   ab.foreach(a => print(a.toChar))
-  println("")
+  println("...")
 
   // ex9
-  val b2 = new FileInputStream("resourse/tinyFile.txt") with Buffering2
+  val b2 = new FileInputStream("Hello/resourse/tinyFile.txt") with Buffering2
   Iterator.continually(b2.read()).takeWhile(_ != -1).map(_.toChar).mkString
 
   // ex10
-  val bi =  new IterableInputStream(new FileInputStream("resourse/tinyFile.txt")).iterator
+  val bi =  new IterableInputStream(new FileInputStream("Hello/resourse/tinyFile.txt")).iterator
   val r3 = bi.map(_.toChar).mkString
   println(r3)
 

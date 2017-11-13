@@ -32,14 +32,14 @@ object FilesAndRegEx extends App {
   ).foreach(println)
 
   // ex5
-  val out = new PrintWriter("resourse/ch09-ex05.txt")
+  val out = new PrintWriter("Hello/resourse/ch09-ex05.txt")
   (0 to 20).map(pow(2,_)).foreach(i => out.println("%7d ".format(i.toInt) + 1/i))
   //Option
   //for(v <- 0 to 20; p=pow(2,v)) {out.println("%7d ".format(p.toInt) + 1/p)}
   out.close
 
   // ex6
-  val out2 = new PrintWriter("resourse/ch09-ex06.txt")
+  val out2 = new PrintWriter("Hello/resourse/ch09-ex06.txt")
   """\\\"""".r.findAllIn("""Hello \"Basile\" how are you ?""").foreach(out2.println(_))
   out2.close
 
@@ -58,7 +58,7 @@ object FilesAndRegEx extends App {
     val dirList = dir.listFiles
     dirList.filter(_.toString.endsWith(".class")).length + dirList.filter(_.isDirectory).map(countClass(_)).sum
   }
-  val dir = new File("/home/bass/repos/learnscala/Hello/target")
+  val dir = new File("e:/dev/java/learnscala/Hello/target")
   println("countClass: " + countClass(dir))
 
 
@@ -77,10 +77,10 @@ object FilesAndRegEx extends App {
   jacques.addFriend(pierre)
   val persons = Array(paul, pierre, jacques)
   import java.io._
-  val out3 = new ObjectOutputStream(new FileOutputStream("resourse/test.obj"))
+  val out3 = new ObjectOutputStream(new FileOutputStream("Hello/resourse/test.obj"))
   out3.writeObject(persons)
   out3.close()
-  val in2 = new ObjectInputStream(new FileInputStream("resourse/test.obj"))
+  val in2 = new ObjectInputStream(new FileInputStream("Hello/resourse/test.obj"))
   val Array(paulA, pierreA, jacquesA) = in2.readObject().asInstanceOf[Array[Person]]
   println( paulA.name + " " + pierreA.name + " " + jacquesA.name )
 
