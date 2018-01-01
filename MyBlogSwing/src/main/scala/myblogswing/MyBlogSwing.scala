@@ -1,8 +1,7 @@
 package myblogswing
 
 import java.awt.{Dimension, Toolkit}
-
-import scala.collection.mutable
+import java.util.Date
 import scala.swing._
 import scala.swing.event.ButtonClicked
 
@@ -67,12 +66,44 @@ class UI extends MainFrame {
 
     case ButtonClicked(components.updatePosts) =>
       println("updatePosts")
+
+      val u1 = new User()
+      u1.setFirstname("Karl")
+      u1.setLastname("Petroff")
+      val c1 = new Post()
+      c1.setTitle("First title of article")
+      c1.setBody("Ересь в <b>христианстве</b> (в противоположность ортодоксии) — формальное отрицание или сомнение в какой-либо из основных доктрин христианской веры, как они определены в одной или более христианских церквей. Ересь следует отличать от отступничества и раскола. Отступничество почти всегда предполагает полный отказ от христианской веры после того, как она была свободно принята, а раскол является нарушением церковного единства, не обязательно на догматической почве.")
+      c1.setUser(u1)
+      c1.setCreated(new Date())
+
+      val cats = Array(c1,c1,c1)
+      components.postsPanelContent.contents.clear()
+      components.postsPanelContent.contents += components.getPosts(cats)
+      components.postsPanelContent.revalidate()
+      components.postsPanelContent.repaint()
+
     case ButtonClicked(components.updatePost) =>
       println("updatePost")
+
+      val u1 = new User()
+      u1.setFirstname("Karl")
+      u1.setLastname("Petroff")
+      val c1 = new Post()
+      c1.setTitle("First title of article")
+      c1.setBody("Ересь в <b>христианстве</b> (в противоположность ортодоксии) — формальное отрицание или сомнение в какой-либо из основных доктрин христианской веры, как они определены в одной или более христианских церквей. Ересь следует отличать от отступничества и раскола. Отступничество почти всегда предполагает полный отказ от христианской веры после того, как она была свободно принята, а раскол является нарушением церковного единства, не обязательно на догматической почве.<p>Ересь в <b>христианстве</b> (в противоположность ортодоксии) — формальное отрицание или сомнение в какой-либо из основных доктрин христианской веры, как они определены в одной или более христианских церквей. Ересь следует отличать от отступничества и раскола. Отступничество почти всегда предполагает полный отказ от христианской веры после того, как она была свободно принята, а раскол является нарушением церковного единства, не обязательно на догматической почве.</p>")
+      c1.setUser(u1)
+      c1.setCreated(new Date())
+
+      components.postPanelContent.contents.clear()
+      components.postPanelContent.contents += components.getPost(c1)
+      components.postPanelContent.revalidate()
+      components.postPanelContent.repaint()
+
     case ButtonClicked(components.exportPost) =>
       println("exportPost")
     case ButtonClicked(s) =>
       println("Button click on button: '" + s.text + "'")
+
   }
 
   val dim: Dimension = Toolkit.getDefaultToolkit.getScreenSize

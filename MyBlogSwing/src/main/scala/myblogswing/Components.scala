@@ -2,31 +2,25 @@ package myblogswing
 
 import java.awt.{Color, Cursor, Dimension}
 import javax.swing.ImageIcon
-
-import myblogswing.Category
-import org.w3c.dom.events
-import org.w3c.dom.events.EventListener
-
 import scala.swing._
-import scala.swing.event.{Event, MouseClicked}
 
 class Components {
   val categoryPanelContent = new BoxPanel(Orientation.Vertical){
     contents += new Label("categories")
     preferredSize = new Dimension(280,480)
-    background = Color.CYAN
+    border = Swing.EmptyBorder(5, 5, 5, 5)
   }
 
   val postsPanelContent = new BoxPanel(Orientation.Vertical){
     contents += new Label("posts")
     preferredSize = new Dimension(380,480)
-    background = Color.RED
+    border = Swing.EmptyBorder(5, 5, 5, 5)
   }
 
   val postPanelContent = new BoxPanel(Orientation.Vertical){
     contents += new Label("posts")
     preferredSize = new Dimension(455,480)
-    background = Color.GRAY
+    border = Swing.EmptyBorder(5, 5, 5, 5)
   }
 
   val updateCategory = new Button("Update"){
@@ -54,7 +48,6 @@ class Components {
       }, BorderPanel.Position.North)
       add(new ScrollPane(){
         contents = categoryPanelContent
-
       }, BorderPanel.Position.South)
     }
     preferredSize = new Dimension(300,600)
@@ -94,19 +87,14 @@ class Components {
   def getCategories(cats: Array[Category]) : Component = {
     val bp = new BoxPanel(Orientation.Vertical) {
       cats.foreach(c => {
-        contents += new Label(c.getName){
+        contents += new Label("<html><a href=''>" + c.getName + "</a></html>"){
           cursor = new Cursor(Cursor.HAND_CURSOR)
-
-//          mouse.clicks = new Publisher[] {
-//            override def publish(e: Event) {
-//              publish(e)
-//            }
-//          }
-//          mouse.clicks.listeners(new EventListener() {
-//            override def handleEvent(evt: events.Event) {
-//
-//            }
-//          })
+          listenTo(mouse.clicks)
+          reactions += {
+            case _ : event.MouseClicked => {
+              println("Cat:" + c.getName)
+            }
+          }
         }
         contents += Swing.VStrut(5)
       })
@@ -114,5 +102,53 @@ class Components {
     bp
   }
 
+  def getPosts(posts: Array[Post]) : Component = {
+    val bp = new BoxPanel(Orientation.Vertical) {
+      posts.foreach(p => {
+        contents += new Label("<html><a href=''>" + p.getTitle + "</a></html>"){
+          cursor = new Cursor(Cursor.HAND_CURSOR)
+          listenTo(mouse.clicks)
+          reactions += {
+            case _ : event.MouseClicked => {
+              println("Posts:" + p.getTitle)
+            }
+          }
+        }
+        contents += Swing.VStrut(2)
+        contents += new Label(buildName(p.getUser) + ", " + p.getCreated)
+        contents += Swing.VStrut(2)
+        var text = p.getBody;
+        if (text.length > 200) text = text.substring(0, 200)
+        contents += new Label("<html>" + text + "...</html>")
+        contents += Swing.VStrut(10)
+      })
+    }
+    bp
+  }
+
+  def getPost(post: Post) : Component = {
+    val bp = new BoxPanel(Orientation.Vertical) {
+        contents += new Label("<html><h3>" + post.getTitle + "</h></html>"){
+          cursor = new Cursor(Cursor.HAND_CURSOR)
+          listenTo(mouse.clicks)
+          reactions += {
+            case _ : event.MouseClicked => {
+              println("Posts:" + post.getTitle)
+            }
+          }
+        }
+        contents += Swing.VStrut(10)
+        contents += new Label(buildName(post.getUser) + ", " + post.getCreated)
+        contents += Swing.VStrut(5)
+        contents += new Label("<html>" + post.getBody + "</html>")
+        contents += Swing.VStrut(10)
+    }
+    bp
+  }
+
+
+  def buildName(user:User):String = {
+    user.getFirstname + " " + user.getLastname
+  }
 }
 
