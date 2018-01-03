@@ -17,6 +17,7 @@ class UI extends MainFrame {
 
   val components = new Components
   val bottomLabel = new Label("...")
+  val restService = new RestService
 
   val centerPanel = new BoxPanel(Orientation.Horizontal) {
     contents += components.categoryPanel
@@ -46,6 +47,8 @@ class UI extends MainFrame {
 
   reactions += {
     case ButtonClicked(components.updateCategory) =>
+
+      val caegories = restService.getCategories()
 
       println("updateCatgory")
       val c1 = new Category();
