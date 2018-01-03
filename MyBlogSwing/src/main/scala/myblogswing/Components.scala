@@ -1,10 +1,16 @@
 package myblogswing
 
 import java.awt.{Color, Cursor, Dimension}
+import java.text.SimpleDateFormat
 import javax.swing.ImageIcon
+
 import scala.swing._
+import java.util.concurrent.TimeUnit
 
 class Components {
+
+  def dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+
   val categoryPanelContent = new BoxPanel(Orientation.Vertical){
     contents += new Label("categories")
     preferredSize = new Dimension(280,480)
@@ -23,26 +29,26 @@ class Components {
     border = Swing.EmptyBorder(5, 5, 5, 5)
   }
 
-  val updateCategory = new Button("Update"){
+  val updateCategoryBtn = new Button("Update"){
     icon = new ImageIcon(this.getClass().getResource("../img/update.16x16.png"))
   }
 
-  val updatePosts = new Button("Update"){
+  val updatePostsBtn = new Button("Update"){
     icon = new ImageIcon(this.getClass().getResource("../img/update.16x16.png"))
   }
 
-  val updatePost = new Button("Update"){
+  val updatePostBtn = new Button("Update"){
     icon = new ImageIcon(this.getClass().getResource("../img/update.16x16.png"))
   }
 
-  val exportPost = new Button("Export"){
+  val exportPostBtn = new Button("Export"){
     icon = new ImageIcon(this.getClass().getResource("../img/pdffile.16x16.png"))
   }
 
   val categoryPanel = new BoxPanel(Orientation.Vertical) {
     contents += new BorderPanel {
       add(new BorderPanel() {
-        add( updateCategory, BorderPanel.Position.East)
+        add( updateCategoryBtn, BorderPanel.Position.East)
         border = Swing.EmptyBorder(5, 5, 5, 5)
 
       }, BorderPanel.Position.North)
@@ -56,7 +62,7 @@ class Components {
   val postsPanel = new BoxPanel(Orientation.Vertical) {
     contents += new BorderPanel {
       add(new BorderPanel() {
-        add( updatePosts, BorderPanel.Position.East)
+        add( updatePostsBtn, BorderPanel.Position.East)
         border = Swing.EmptyBorder(5, 5, 5, 5)
 
       }, BorderPanel.Position.North)
@@ -71,8 +77,8 @@ class Components {
   val postPanel = new BoxPanel(Orientation.Vertical) {
     contents += new BorderPanel {
       add(new BorderPanel() {
-        add( updatePost, BorderPanel.Position.East)
-        add( exportPost, BorderPanel.Position.West)
+        add( updatePostBtn, BorderPanel.Position.East)
+        add( exportPostBtn, BorderPanel.Position.West)
         border = Swing.EmptyBorder(5, 5, 5, 5)
 
       }, BorderPanel.Position.North)
@@ -84,15 +90,15 @@ class Components {
     preferredSize = new Dimension(475,600)
   }
 
-  def getCategories(cats: Array[Category]) : Component = {
+  def getCategories(cats: Array[Classes.Category]) : Component = {
     val bp = new BoxPanel(Orientation.Vertical) {
       cats.foreach(c => {
-        contents += new Label("<html><a href=''>" + c.getName + "</a></html>"){
+        contents += new Label("<html><a href=''>" + c.name + "</a></html>"){
           cursor = new Cursor(Cursor.HAND_CURSOR)
           listenTo(mouse.clicks)
           reactions += {
             case _ : event.MouseClicked => {
-              println("Cat:" + c.getName)
+
             }
           }
         }
@@ -102,22 +108,22 @@ class Components {
     bp
   }
 
-  def getPosts(posts: Array[Post]) : Component = {
+  def getPosts(posts: Array[Classes.Post]) : Component = {
     val bp = new BoxPanel(Orientation.Vertical) {
       posts.foreach(p => {
-        contents += new Label("<html><a href=''>" + p.getTitle + "</a></html>"){
+        contents += new Label("<html><a href=''>" + p.title + "</a></html>"){
           cursor = new Cursor(Cursor.HAND_CURSOR)
           listenTo(mouse.clicks)
           reactions += {
             case _ : event.MouseClicked => {
-              println("Posts:" + p.getTitle)
+              println("Posts:" + p.title)
             }
           }
         }
         contents += Swing.VStrut(2)
-        contents += new Label(buildName(p.getUser) + ", " + p.getCreated)
+        contents += new Label(buildName(p.user) + ", " + formatDate(p.created) )
         contents += Swing.VStrut(2)
-        var text = p.getBody;
+        var text = p.body;
         if (text.length > 200) text = text.substring(0, 200)
         contents += new Label("<html>" + text + "...</html>")
         contents += Swing.VStrut(10)
@@ -126,29 +132,67 @@ class Components {
     bp
   }
 
-  def getPost(post: Post) : Component = {
+  def getPost(post: Classes.Post) : Component = {
     val bp = new BoxPanel(Orientation.Vertical) {
-        contents += new Label("<html><h3>" + post.getTitle + "</h></html>"){
+        contents += new Label("<html><h3>" + post.title + "</h></html>"){
           cursor = new Cursor(Cursor.HAND_CURSOR)
           listenTo(mouse.clicks)
           reactions += {
             case _ : event.MouseClicked => {
-              println("Posts:" + post.getTitle)
+              println("Posts:" + post.title)
             }
           }
         }
         contents += Swing.VStrut(10)
-        contents += new Label(buildName(post.getUser) + ", " + post.getCreated)
+        contents += new Label(buildName(post.user) + ", " + formatDate(post.created))
         contents += Swing.VStrut(5)
-        contents += new Label("<html>" + post.getBody + "</html>")
+        contents += new Label("<html>" + post.body + "</html>")
         contents += Swing.VStrut(10)
     }
     bp
   }
 
 
-  def buildName(user:User):String = {
-    user.getFirstname + " " + user.getLastname
+  def buildName(user:Classes.User):String = {
+    user.firstname + " " + user.lastname
   }
+
+  def formatDate(dt:String) : String = {
+    val time = new java.util.Date(dt.toLong)
+    dateFormatter.format(time)
+  }
+
+  def updateCategories(): Unit = {
+    val categories = UI.restService.getCategories()
+    UI.components.categoryPanelContent.contents.clear()
+    UI.components.categoryPanelContent.contents += UI.components.getCategories(categories)
+    UI.components.categoryPanelContent.revalidate()
+    UI.components.categoryPanelContent.repaint()
+  }
+
+  def updatePosts(): Unit = {
+    if (0 == UI.currentData.categoryId) return
+
+    val posts = UI.restService.getPosts(UI.currentData.categoryId)
+    UI.components.postsPanelContent.contents.clear()
+    UI.components.postsPanelContent.contents += UI.components.getPosts(posts)
+    UI.components.postsPanelContent.revalidate()
+    UI.components.postsPanelContent.repaint()
+  }
+
+  def updatePost(): Unit ={
+    if (0 == UI.currentData.postId) return
+
+    val post = UI.restService.getPost(UI.currentData.postId)
+    UI.components.postPanelContent.contents.clear()
+    UI.components.postPanelContent.contents += UI.components.getPost(post)
+    UI.components.postPanelContent.revalidate()
+    UI.components.postPanelContent.repaint()
+  }
+
+  def exportPost(): Unit = {
+    println("exportPost")
+  }
+
 }
 

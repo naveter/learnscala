@@ -13,29 +13,34 @@ object Classes {
     id:Int,
     firstname: String,
     lastname: String,
-    created: Date,
+    created: String,
     login: String,
     password: String,
-    lastlogin: Date
+    lastlogin: String
   )
 
   case class Source(id:Int,
     user_id: Int,
     url: String,
-    lastupdate: Date,
+    lastupdate: String,
     parser: String,
-    created: Date
+    created: String
   )
 
   case class Post(
     id:Int,
     user_id: Int,
     category_id: Int,
-    created: Date,
+    created: String,
     title: String,
     body: String,
     user: User,
     category: Category
   )
+
+  class CurrentData {
+    var categoryId = 0
+    var postId = 0
+  }
 
 }
