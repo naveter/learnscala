@@ -1,18 +1,19 @@
 package myblogswing
 
-import org.apache.http.impl.client.HttpClients
-
+import net.liftweb.json._
+import net.liftweb.json.DefaultFormats
 import scala.util.control.Breaks._
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.HttpClientBuilder
 import java.io.BufferedReader
 import java.io.InputStreamReader
-
+import scala.collection.mutable.ArrayBuffer
 import scala.swing.Dialog
 
 class RestService {
 
   val serverUrl = "http://localhost:8080/rest/"
+  implicit val formats = DefaultFormats
 
   def getRestContent(url:String): String = {
     val rurl = serverUrl + url
@@ -35,13 +36,28 @@ class RestService {
         result.append(line)
       }
     }
+
     result.toString
   }
 
-  def getCategories():Array[Category] = {
-    val cont = getRestContent("categories")
+//  case class Categor(id: Int, name: String)
 
-    Array(new Category())
+  def getCategories():Array[Classes.Categor] = {
+    val result = getRestContent("categories")
+    val jValue = parse(result.toString)
+    val categories = ArrayBuffer[Classes.Categor]()
+
+    val elements = jValue.children
+
+    for(j <- elements){
+       val cat = j.extract[Classes.Categor]
+      categories += cat
+    }
+
+//    val categories = jValue.extract[ Array[Categor] ]
+
+    Array(new Category)
+    categories.toArray
   }
 
   def getPosts(category_id:Integer) : Array[Post] = {

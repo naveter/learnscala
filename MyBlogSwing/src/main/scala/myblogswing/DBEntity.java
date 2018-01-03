@@ -1,6 +1,6 @@
 package myblogswing;
 
-public abstract class DBEntity {
+public abstract  class DBEntity {
 
     protected Long id;
 
