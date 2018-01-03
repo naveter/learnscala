@@ -1,21 +1,14 @@
 package myblogswing
 
 import java.awt.{Dimension, Toolkit}
-import java.util.Date
 import scala.swing._
 import scala.swing.event.ButtonClicked
 
 class UI extends MainFrame {
-  def restrictHeight(s: Component) {
-    s.maximumSize = new Dimension(Short.MaxValue, s.preferredSize.height)
-  }
-
   title = "MyBlogSwing"
   preferredSize = new Dimension(1200,600)
   resizable = false
   iconImage = Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/icon.128x128.png"))
-
-  val bottomLabel = new Label("...")
 
   val centerPanel = new BoxPanel(Orientation.Horizontal) {
     contents += UI.components.categoryPanel
@@ -27,13 +20,20 @@ class UI extends MainFrame {
     border = Swing.EmptyBorder(5, 5, 5, 5)
   }
 
+  val bottomBoxPanel = new BoxPanel(Orientation.Horizontal) {
+    contents += Swing.HStrut(5)
+    contents += UI.components.bottomLabel
+  }
+
+  def refreshBottom(): Unit ={
+    bottomBoxPanel.revalidate()
+    bottomBoxPanel.repaint()
+  }
+
   contents = new BorderPanel {
     add((new MainMenuBar()).menuBar, BorderPanel.Position.North)
     add(centerPanel, BorderPanel.Position.Center)
-    add(new BoxPanel(Orientation.Horizontal) {
-      contents += Swing.HStrut(5)
-      contents += bottomLabel
-    }, BorderPanel.Position.South)
+    add(bottomBoxPanel, BorderPanel.Position.South)
 
     border = Swing.EmptyBorder(0, 1, 1, 1)
   }
@@ -56,12 +56,9 @@ class UI extends MainFrame {
       println("Button click on button: '" + s.text + "'")
   }
 
+  // Window moves to center of screen
   val dim: Dimension = Toolkit.getDefaultToolkit.getScreenSize
-  val w: Int = this.size.width
-  val h: Int = this.size.height
-  val x: Int = (dim.width - w) / 2
-  val y: Int = (dim.height - h) / 2
-  this.location = new Point(x, y)
+  this.location = new Point((dim.width - this.size.width) / 2, (dim.height - this.size.height) / 2)
 
 }
 
@@ -69,6 +66,14 @@ object UI {
   val restService = new RestService
   val components = new Components
   val currentData = new Classes.CurrentData
+  val bottomBoxPanel = UI.bottomBoxPanel
+
+  def revalidate(): Unit = {
+    UI.revalidate()
+  }
+  def repaint(): Unit ={
+    UI.repaint()
+  }
 }
 
 object MyBlogSwing {
@@ -82,7 +87,6 @@ object MyBlogSwing {
 
     val ui = new UI
     ui.visible = true
-    println("End of main function")
   }
 }
 
