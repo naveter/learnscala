@@ -25,11 +25,6 @@ class UI extends MainFrame {
     contents += UI.components.bottomLabel
   }
 
-  def refreshBottom(): Unit ={
-    bottomBoxPanel.revalidate()
-    bottomBoxPanel.repaint()
-  }
-
   contents = new BorderPanel {
     add((new MainMenuBar()).menuBar, BorderPanel.Position.North)
     add(centerPanel, BorderPanel.Position.Center)
@@ -66,14 +61,6 @@ object UI {
   val restService = new RestService
   val components = new Components
   val currentData = new Classes.CurrentData
-  val bottomBoxPanel = UI.bottomBoxPanel
-
-  def revalidate(): Unit = {
-    UI.revalidate()
-  }
-  def repaint(): Unit ={
-    UI.repaint()
-  }
 }
 
 object MyBlogSwing {

@@ -1,7 +1,6 @@
 package myblogswing
 
 import javax.swing.{ImageIcon, KeyStroke}
-
 import scala.swing._
 
 class MainMenuBar

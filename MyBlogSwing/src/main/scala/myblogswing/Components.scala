@@ -156,12 +156,7 @@ class Components {
   }
 
   def updateCategories(): Unit = {
-    bottomLabel.text = "Load categories"
-    UI.
     val categories = UI.restService.getCategories()
-    bottomLabel.text = "..."
-    UI.revalidate()
-    UI.repaint()
     categoryPanelContent.contents.clear()
     categoryPanelContent.contents += UI.components.getCategories(categories)
     categoryPanelContent.revalidate()

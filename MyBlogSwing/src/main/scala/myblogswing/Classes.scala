@@ -1,7 +1,5 @@
 package myblogswing
 
-import java.util.Date
-
 object Classes {
 
   case class Category(
