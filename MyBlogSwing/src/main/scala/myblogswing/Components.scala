@@ -30,19 +30,19 @@ class Components {
   }
 
   val updateCategoryBtn = new Button("Update"){
-    icon = new ImageIcon(this.getClass().getResource("../img/update.16x16.png"))
+//    icon = new ImageIcon(this.getClass().getResource("../img/update.16x16.png"))
   }
 
   val updatePostsBtn = new Button("Update"){
-    icon = new ImageIcon(this.getClass().getResource("../img/update.16x16.png"))
+//    icon = new ImageIcon(this.getClass().getResource("../img/update.16x16.png"))
   }
 
   val updatePostBtn = new Button("Update"){
-    icon = new ImageIcon(this.getClass().getResource("../img/update.16x16.png"))
+//    icon = new ImageIcon(this.getClass().getResource("../img/update.16x16.png"))
   }
 
   val exportPostBtn = new Button("Export"){
-    icon = new ImageIcon(this.getClass().getResource("../img/pdffile.16x16.png"))
+//    icon = new ImageIcon(this.getClass().getResource("../img/pdffile.16x16.png"))
   }
 
   val categoryPanel = new BoxPanel(Orientation.Vertical) {

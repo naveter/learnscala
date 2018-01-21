@@ -8,7 +8,7 @@ class UI extends MainFrame {
   title = "MyBlogSwing"
   preferredSize = new Dimension(1200,600)
   resizable = false
-  iconImage = Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/icon.128x128.png"))
+//  iconImage = Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/icon.128x128.png"))
 
   val centerPanel = new BoxPanel(Orientation.Horizontal) {
     contents += UI.components.categoryPanel
