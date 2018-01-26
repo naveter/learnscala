@@ -1,3 +1,3 @@
-println("hello")
-(1 to 10).foreach(print)
-val res = "foo".concat("bar")
+val pattern="([0-9]+) ([A-Za-z]+)".r
+val pattern(count, fruit) = "100 Bananas"
+
